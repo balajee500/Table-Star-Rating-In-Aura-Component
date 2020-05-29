@@ -1,0 +1,83 @@
+<aura:component>
+	<!-- Attribute section -->
+	<aura:attribute name="label" type="String" default="Table Star Rating Label"
+		description="Accepts the string value and set the label for the star rating table component."/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:attribute name="statements" type="List" 
+		default="[
+			{'label': 'Statement A', 'value': 'Statement_A'},
+			{'label': 'Statement B', 'value': 'Statement_B'},
+			{'label': 'Statement C', 'value': 'Statement_C'},
+			{'label': 'Statement D', 'value': 'Statement_D'}
+		]"
+		description="Accepts the statement for each row.."/>
+	<!-- <aura:attribute name="class" type="String" default="slds-m-around_small"
+		description="It sets the class property to the rating component"/> -->
+	<aura:attribute name="class" type="String" default=""
+		description="It sets the class property to the rating component"/>
+	<aura:attribute name="options" type="List" 
+		default="[
+			{'id': 'star-1', 'label': '1.0', 'weightage': 1.0},
+			{'id': 'star-2', 'label': '2.0', 'weightage': 2.0},
+			{'id': 'star-3', 'label': '3.0', 'weightage': 3.0},
+			{'id': 'star-4', 'label': '4.0', 'weightage': 4.0},
+			{'id': 'star-5', 'label': '5.0', 'weightage': 5.0}
+		]"
+		description="Accepts the List value and populate the stars.(ex: {'id': 'star-1', 'label': 'bad', 'weightage': 'bad'}])."/>
+	<aura:attribute name="required" type="Boolean" 
+		description="Accepts boolean value(true or false) and makes this as mandatory component."/>
+	<aura:attribute name="statementheading" type="string" default="Statement"/>
+	<aura:attribute name="ratingheading" type="string" default="Rating"/>
+	<aura:attribute name="itemvalue" type="Object" default="{ }"/>
+	<!-- Body section -->
+	<div class="{!'slds-form-element ' + v.class}">
+		<legend class="slds-form-element__label">
+			<aura:if isTrue="{!v.required}">
+				<abbr class="slds-required" title="required">*</abbr>
+			</aura:if>
+			{!v.label}
+		</legend>
+		<div class="star-rating-table">
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+				<thead>
+					<tr class="slds-line-height_reset">
+						<th class="" scope="col">
+							<div class="slds-truncate" title="{!v.statementheading}">{!v.statementheading}</div>
+						</th>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="{!v.ratingheading}">{!v.ratingheading}</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<aura:iteration items="{!v.statements}" var="stmt">
+						<tr class="slds-hint-parent">
+							<td data-label="{!v.statementheading}">
+								<div class="slds-truncate" title="{!stmt.label}">{!stmt.label}</div>
+							</td>
+							<td data-label="{!v.ratingheading}">
+								<div style="display:flex;">
+									<aura:iteration items="{!v.options}" var="starOpt">
+										<div class="slds-radio" title="{!stmt.value}">
+											<input type="radio" id="{!starOpt.id}" name="star" value="{!starOpt.weightage}"/>
+											<label class="slds-radio__label visualPicker" title="{!starOpt.label}" for="{!starOpt.id}" onclick="{!c.changeCssClass}">
+												<lightning:icon iconName="utility:favorite" alternativeText="star icon not found" />
+											</label>
+										</div>
+									</aura:iteration>
+								</div>
+							</td>
+						</tr>
+					</aura:iteration>
+					<tr class="slds-hint-parent">
+						<td data-label="{!v.statementheading}">
+						</td>
+						<td data-label="{!v.ratingheading}">
+							Average : {!v.itemvalue.average}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</aura:component>

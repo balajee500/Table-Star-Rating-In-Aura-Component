@@ -1,0 +1,14 @@
+.THIS .visualPickerSelected svg {
+	fill: rgb(255, 231, 72);
+	stroke: #c79595;
+	stroke-width: .03em;
+}
+.THIS .visualPicker svg {
+	fill: rgb(255, 255, 255);
+	stroke: #c79595;
+	stroke-width: .03em;
+}
+.THIS .star-rating-table{
+	display: flex;
+	overflow-x: auto;
+}
